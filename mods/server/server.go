@@ -32,7 +32,7 @@ func (t *Server) initGroup() {
 
 func (t *Server) init() {
 	t.engine.OnFullMatch("all").Handle(func(ctx *zero.Ctx) {
-		pixiv := fmt.Sprintf("pixiv is ready!\n已经注册的匹配:\n%s", strings.Join(t.Pixiv.FindGroupAll(), "\n"))
+		pixiv := fmt.Sprintf("pixiv已经注册的匹配:\n%s", strings.Join(t.Pixiv.FindGroupAll(), "\n"))
 		ctx.SendChain(message.Text(strings.Join([]string{pixiv}, "\n")))
 	})
 }
