@@ -29,7 +29,7 @@ type ArtworkTag struct {
 
 type ArtworkTagAssociation struct {
 	Model
-	Pagination   `json:"-"`
+	Pagination   `json:"-" gorm:"-"`
 	ArtworkId    uint
 	ArtworkTagId uint
 }
