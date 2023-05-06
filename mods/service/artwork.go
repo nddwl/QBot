@@ -94,6 +94,9 @@ func (t *ArtworkService) FindArtworkTagByName(tag ...string) (m []model.ArtworkT
 }
 
 func (t *ArtworkService) FindOrCreateArtworkTag(artworkTag ...model.ArtworkTag) (m []model.ArtworkTag, err error) {
+	if len(artworkTag) == 0 {
+		artworkTag = append(artworkTag, model.ArtworkTag{Tag: "can't find tag"})
+	}
 	tag := make([]string, len(artworkTag))
 	for k, v := range artworkTag {
 		tag[k] = v.Tag
