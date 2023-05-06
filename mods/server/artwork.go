@@ -34,7 +34,7 @@ func (t *ArtworkServer) initGroup() {
 }
 
 func (t *ArtworkServer) Tag(ctx *zero.Ctx) {
-	if kv, ok := utils.Find(ctx.MessageString(), "tag", 3, 2); ok {
+	if kv, ok := utils.Find(ctx.MessageString(), "tag", 3, 1); ok {
 		if t.tag.Forward(ctx) {
 			return
 		}
