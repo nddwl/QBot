@@ -94,7 +94,7 @@ func (t *ArtworkServer) Pid(ctx *zero.Ctx) {
 		if t.pid.Forward(ctx) {
 			return
 		}
-		if !regexp.MustCompile(`[1-9]\d{5,10}`).MatchString(kv[1]) {
+		if !regexp.MustCompile(`^[1-9]\d{5,10}$`).MatchString(kv[1]) {
 			return
 		}
 		url, tag, err := t.FindArtwork(kv[1])

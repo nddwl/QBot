@@ -110,8 +110,8 @@ func (t *ArtworkDao) FindArtworkTagByName(tag ...string) (m []model.ArtworkTag, 
 }
 
 func (t *ArtworkDao) FindArtworkTagByArtworkId(artworkId ...uint) (m []model.ArtworkTag, err error) {
-	err = t.db.Model(&model.ArtworkTag{}).Joins("JOIN artwork_tag_association ata ON ata.artwork_id IN (?)", artworkId).
-		Distinct("ata.artwork_tag_id").Select("artwork_tag.*").Find(&m).Error
+	err = t.db.Model(&model.ArtworkTag{}).Joins("JOIN artwork_tag_association ata ON ata.artwork_id = artwork_tag.id").
+		Distinct("ata.artwork_tag_id").Where("artwork_id IN (?)", artworkId).Select("artwork_tag.*").Find(&m).Error
 	return
 }
 
