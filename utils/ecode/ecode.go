@@ -54,7 +54,7 @@ func (e Code) ReSet(message string) Codes {
 	}
 }
 
-func Cause(err error) Codes {
+func Cause(err error) (code Codes) {
 	if err == nil {
 		return Ok
 	}
@@ -66,5 +66,10 @@ func Cause(err error) Codes {
 	} else {
 		fmt.Printf("未知错误:%s\n", err)
 	}
-	return Err
+	if err.Error() != "" {
+		code = Err.ReSet(err.Error())
+	} else {
+		code = Err
+	}
+	return
 }

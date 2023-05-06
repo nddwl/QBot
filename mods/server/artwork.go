@@ -217,7 +217,7 @@ func (t *ArtworkServer) SendTag(ctx *zero.Ctx, artworkTag []model.ArtworkTag) (m
 
 func (t *ArtworkServer) FindArtwork(pid string) (m1 []model.ArtworkUrl, m2 []model.ArtworkTag, err error) {
 	artworks, err := t.service.Pixiv.Artwork.FindArtwork(pid)
-	artwork := &artworks[0]
+	artwork := &model.Artwork{}
 	if err != nil {
 		if !t.service.IsErrRecordNotFound(err) {
 			return
@@ -233,6 +233,7 @@ func (t *ArtworkServer) FindArtwork(pid string) (m1 []model.ArtworkUrl, m2 []mod
 		m2, err = t.CreateArtworkTag(pid, artwork.ID)
 		return
 	}
+	artwork = &artworks[0]
 	m1, err = t.service.Pixiv.Artwork.FindArtworkUrl(artwork.ID)
 	if err != nil {
 		if !t.service.IsErrRecordNotFound(err) {

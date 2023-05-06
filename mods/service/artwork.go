@@ -2,7 +2,7 @@ package service
 
 import (
 	"QBot/mods/model"
-	"QBot/utils/ecode"
+	"gorm.io/gorm"
 )
 
 type ArtworkService struct {
@@ -39,7 +39,7 @@ func (t *ArtworkService) DeleteArtworkAll(artworkId uint) (err error) {
 func (t *ArtworkService) FindArtwork(pid ...string) (m []model.Artwork, err error) {
 	m, err = t.dao.Pixiv.Artwork.FindArtwork(pid...)
 	if len(m) == 0 {
-		err = ecode.NotFound
+		err = gorm.ErrRecordNotFound
 	}
 	return
 }
@@ -67,7 +67,7 @@ func (t *ArtworkService) UpdateArtworkUrlCqCode(artworkUrl ...model.ArtworkUrl) 
 func (t *ArtworkService) FindArtworkUrl(artworkId ...uint) (m []model.ArtworkUrl, err error) {
 	m, err = t.dao.Pixiv.Artwork.FindArtworkUrl(artworkId...)
 	if len(m) == 0 {
-		err = ecode.NotFound
+		err = gorm.ErrRecordNotFound
 	}
 	return
 }
@@ -80,7 +80,7 @@ func (t *ArtworkService) CreateArtworkTag(artworkTag ...model.ArtworkTag) (m []m
 func (t *ArtworkService) FindArtworkTag(artworkTagId ...uint) (m []model.ArtworkTag, err error) {
 	m, err = t.dao.Pixiv.Artwork.FindArtworkTag(artworkTagId...)
 	if len(m) == 0 {
-		err = ecode.NotFound
+		err = gorm.ErrRecordNotFound
 	}
 	return
 }
@@ -88,7 +88,7 @@ func (t *ArtworkService) FindArtworkTag(artworkTagId ...uint) (m []model.Artwork
 func (t *ArtworkService) FindArtworkTagByName(tag ...string) (m []model.ArtworkTag, err error) {
 	m, err = t.dao.Pixiv.Artwork.FindArtworkTagByName(tag...)
 	if len(m) == 0 {
-		err = ecode.NotFound
+		err = gorm.ErrRecordNotFound
 	}
 	return
 }
@@ -130,7 +130,7 @@ func (t *ArtworkService) FindOrCreateArtworkTag(artworkTag ...model.ArtworkTag) 
 func (t *ArtworkService) FindArtworkTagByArtworkId(artworkId ...uint) (m []model.ArtworkTag, err error) {
 	m, err = t.dao.Pixiv.Artwork.FindArtworkTagByArtworkId(artworkId...)
 	if len(m) == 0 {
-		err = ecode.NotFound
+		err = gorm.ErrRecordNotFound
 	}
 	return
 }
@@ -143,7 +143,7 @@ func (t *ArtworkService) CreateArtworkTagAssociation(artworkId uint, artworkTagI
 func (t *ArtworkService) FindArtworkTagAssociation(artworkId uint) (m []model.ArtworkTagAssociation, err error) {
 	m, err = t.dao.Pixiv.Artwork.FindArtworkTagAssociation(artworkId)
 	if len(m) == 0 {
-		err = ecode.NotFound
+		err = gorm.ErrRecordNotFound
 	}
 	return
 }
@@ -161,7 +161,7 @@ func (t *ArtworkService) DeleteArtworkTagAssociationAll(artworkId uint) (m []mod
 func (t *ArtworkService) FindArtworkUrlByArtworkTag(all bool, page model.Pagination, tag ...string) (m []model.ArtworkUrl, err error) {
 	m, err = t.dao.Pixiv.Artwork.FindArtworkUrlByArtworkTag(all, page, tag...)
 	if len(m) == 0 {
-		err = ecode.NotFound
+		err = gorm.ErrRecordNotFound
 	}
 	return
 }
