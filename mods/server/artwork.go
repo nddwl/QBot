@@ -81,7 +81,7 @@ func (t *ArtworkServer) Tag(ctx *zero.Ctx) {
 			utils.SendErr(ctx, err)
 			return
 		}
-		messages[1], err = t.SendImageSmall(ctx, artworkUrl, "")
+		messages[1], err = t.SendImageSmall(ctx, artworkUrl)
 		if err != nil {
 			utils.SendErr(ctx, err)
 		}
@@ -109,13 +109,13 @@ func (t *ArtworkServer) Pid(ctx *zero.Ctx) {
 		}
 		switch {
 		case kv[2] == "1":
-			messages[1], err = t.SendImageOriginal(ctx, url, kv[1])
+			messages[1], err = t.SendImageOriginal(ctx, url)
 			if err != nil {
 				utils.SendErr(ctx, err)
 				return
 			}
 		default:
-			messages[1], err = t.SendImageSmall(ctx, url, kv[1])
+			messages[1], err = t.SendImageSmall(ctx, url)
 			if err != nil {
 				utils.SendErr(ctx, err)
 				return
@@ -125,7 +125,7 @@ func (t *ArtworkServer) Pid(ctx *zero.Ctx) {
 	}
 }
 
-func (t *ArtworkServer) SendImageSmall(ctx *zero.Ctx, artworkUrl []model.ArtworkUrl, pid string) (messagesId int64, err error) {
+func (t *ArtworkServer) SendImageSmall(ctx *zero.Ctx, artworkUrl []model.ArtworkUrl) (messagesId int64, err error) {
 	images := make([]message.MessageSegment, len(artworkUrl))
 	var add []int
 	for k, v := range artworkUrl {
@@ -161,7 +161,7 @@ func (t *ArtworkServer) SendImageSmall(ctx *zero.Ctx, artworkUrl []model.Artwork
 	return
 }
 
-func (t *ArtworkServer) SendImageOriginal(ctx *zero.Ctx, artworkUrl []model.ArtworkUrl, pid string) (messagesId int64, err error) {
+func (t *ArtworkServer) SendImageOriginal(ctx *zero.Ctx, artworkUrl []model.ArtworkUrl) (messagesId int64, err error) {
 	images := make([]message.MessageSegment, len(artworkUrl))
 	var add []int
 	for k, v := range artworkUrl {
