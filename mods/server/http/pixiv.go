@@ -75,7 +75,7 @@ func (p *Pixiv) HandleStatusCode(code int, b []byte) (err error) {
 }
 
 // GET 请求
-func (p *Pixiv) GET(url string, referer string) (b []byte, err error) {
+func (p *Pixiv) GET(url string) (b []byte, err error) {
 	fmt.Printf("GET:%s\n", url)
 	r, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -84,7 +84,7 @@ func (p *Pixiv) GET(url string, referer string) (b []byte, err error) {
 
 	r.Header.Add("Cookie", config.Pixiv.Cookie)
 	r.Header.Add("User-Agent", config.Pixiv.UserAgent)
-	r.Header.Add("Referer", referer)
+	r.Header.Add("Referer", PIXIV)
 
 	re, err := p.client.Do(r)
 	if err != nil {
@@ -101,7 +101,7 @@ func (p *Pixiv) GET(url string, referer string) (b []byte, err error) {
 }
 
 // POST 请求
-func (p *Pixiv) POST(url string, referer string) (b []byte, err error) {
+func (p *Pixiv) POST(url string) (b []byte, err error) {
 	fmt.Printf("POST:%s\n", url)
 	r, err := http.NewRequest("POST", url, nil)
 	if err != nil {
@@ -110,7 +110,7 @@ func (p *Pixiv) POST(url string, referer string) (b []byte, err error) {
 
 	r.Header.Add("Cookie", config.Pixiv.Cookie)
 	r.Header.Add("User-Agent", config.Pixiv.UserAgent)
-	r.Header.Add("Referer", referer)
+	r.Header.Add("Referer", PIXIV)
 
 	re, err := p.client.Do(r)
 	if err != nil {
@@ -127,8 +127,8 @@ func (p *Pixiv) POST(url string, referer string) (b []byte, err error) {
 }
 
 // GetJson 请求
-func (p *Pixiv) GetJson(url string, referer string) (body json.RawMessage, err error) {
-	b, err := p.GET(url, referer)
+func (p *Pixiv) GetJson(url string) (body json.RawMessage, err error) {
+	b, err := p.GET(url)
 	if err != nil {
 		return
 	}
@@ -148,9 +148,8 @@ func (p *Pixiv) GetJson(url string, referer string) (body json.RawMessage, err e
 func (p *Pixiv) GetArtworkUrl(pid string) (m []model.ArtworkUrl, err error) {
 
 	u := PIXIV + "ajax/illust/" + pid + "/pages?lang=zn&version=" + config.Pixiv.Version
-	r := PIXIV + "artworks/" + pid
 
-	b, err := p.GetJson(u, r)
+	b, err := p.GetJson(u)
 	if err != nil {
 		return
 	}
@@ -160,9 +159,8 @@ func (p *Pixiv) GetArtworkUrl(pid string) (m []model.ArtworkUrl, err error) {
 
 func (p *Pixiv) GetArtworkTag(pid string) (m []model.ArtworkTag, err error) {
 	u := PIXIV + "ajax/tags/frequent/illust?ids[]=" + pid + "&lang=zn&version=" + config.Pixiv.Version
-	r := PIXIV + "artworks/" + pid
 
-	b, err := p.GetJson(u, r)
+	b, err := p.GetJson(u)
 	if err != nil {
 		return
 	}
@@ -170,14 +168,12 @@ func (p *Pixiv) GetArtworkTag(pid string) (m []model.ArtworkTag, err error) {
 	return
 }
 
-func (p *Pixiv) GetImage(url string, pid string) (b []byte, err error) {
-	r := PIXIV + "artworks/" + pid
-	b, err = p.GET(url, r)
+func (p *Pixiv) GetImage(url string) (b []byte, err error) {
+	b, err = p.GET(url)
 	return
 }
 
-func (p *Pixiv) PostImage(url string, pid string) (b []byte, err error) {
-	r := PIXIV + "artworks/" + pid
-	b, err = p.POST(url, r)
+func (p *Pixiv) PostImage(url string) (b []byte, err error) {
+	b, err = p.POST(url)
 	return
 }

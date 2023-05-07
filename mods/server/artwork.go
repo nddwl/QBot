@@ -132,7 +132,7 @@ func (t *ArtworkServer) SendImageSmall(ctx *zero.Ctx, artworkUrl []model.Artwork
 		if v.CqCodeSmall != "" {
 			images[k] = message.Image(v.CqCodeSmall)
 		} else {
-			b, err := t.Request.GetImage(v.Url.Small, pid)
+			b, err := t.Request.GetImage(v.Url.Small)
 			add = append(add, k)
 			if err != nil {
 				images[k] = message.Text(fmt.Sprintf("图片获取失败:%s", err))
@@ -168,7 +168,7 @@ func (t *ArtworkServer) SendImageOriginal(ctx *zero.Ctx, artworkUrl []model.Artw
 		if v.CqCodeOriginal != "" {
 			images[k] = message.Image(v.CqCodeOriginal)
 		} else {
-			b, err := t.Request.GetImage(v.Url.Original, pid)
+			b, err := t.Request.GetImage(v.Url.Original)
 			add = append(add, k)
 			if err != nil {
 				images[k] = message.Text(fmt.Sprintf("图片获取失败:%s", err))
